@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import {
   Checkbox,
   IconButton,
@@ -6,6 +6,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  TextField,
 } from '@mui/material';
 import { ITodo } from '../types/itodo';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -16,7 +17,18 @@ interface ItemTodoProps {
 }
 
 function ItemTodo({ itemTodo }: ItemTodoProps) {
-  const { handleChanged, handleRemove } = useContext(TaskContext);
+  const { handleChanged, handleRemove, handleEditTask } = useContext(TaskContext);
+  const [edit, setEdit] = useState(false);
+  const [value, setValue] = useState('');
+
+  const handleEdit = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const handleTask = (e: React.FocusEvent<HTMLInputElement>) => {
+    setEdit(false);
+    handleEditTask(itemTodo.id, e.target.value);
+  };
 
   return (
     <ListItem
@@ -37,10 +49,20 @@ function ItemTodo({ itemTodo }: ItemTodoProps) {
             disableRipple
           />
         </ListItemIcon>
-        <ListItemText
-          sx={itemTodo.completed ? { textDecoration: 'line-through' } : { textDecoration: 'none' }}
-          primary={itemTodo.title}
-        />
+        {edit ? (
+          <TextField variant="standard" value={value} onChange={handleEdit} onBlur={handleTask} />
+        ) : (
+          <ListItemText
+            sx={
+              itemTodo.completed ? { textDecoration: 'line-through' } : { textDecoration: 'none' }
+            }
+            primary={itemTodo.title}
+            onDoubleClick={() => {
+              setEdit(true);
+              setValue(itemTodo.title);
+            }}
+          />
+        )}
       </ListItemButton>
     </ListItem>
   );

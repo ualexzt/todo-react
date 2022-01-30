@@ -33,12 +33,17 @@ function App() {
     todos[idx].completed = !todos[idx].completed;
     setTodos([...todos]);
   };
+  const handleEditTask = (id: number, value: string): void => {
+    const idx = todos.findIndex((item: ITodo) => item.id === id);
+    todos[idx].title = value;
+    setTodos([...todos]);
+  };
 
   return (
-    <TaskContext.Provider value={{ handleRemove, handleChanged }}>
+    <TaskContext.Provider value={{ handleRemove, handleChanged, handleEditTask }}>
       <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 5, mb: 5 }}>
         <Typography gutterBottom variant="h2" color={'#2196f3'}>
-          Tasks List
+          Tasks List App
         </Typography>
         <AddTodo value={value} AddTodo={handelAdd} onChange={handelChange} />
         {todos.length ? (

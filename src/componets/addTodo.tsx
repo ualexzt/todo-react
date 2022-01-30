@@ -10,7 +10,7 @@ interface AddTodoProps {
 function AddTodo({ value, AddTodo, onChange }: AddTodoProps) {
   return (
     <TextField
-      label="Add todo"
+      label="Add task"
       variant="outlined"
       fullWidth={true}
       value={value}
