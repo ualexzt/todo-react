@@ -7,20 +7,6 @@ interface PlaceTodoProps {
   todos: ITodo[];
 }
 
-// function filterReducer(state: ITodo[], action: TodoAction) {
-//   console.log(state);
-//   switch (action.type) {
-//     case 'active':
-//       return state.filter((item) => item.completed);
-//     case 'complete':
-//       return state.filter((item) => !item.completed);
-//     case 'all':
-//       return state;
-//     default:
-//       return state;
-//   }
-// }
-
 function ListTodos({ todos }: PlaceTodoProps) {
   const [state, setState] = useState<ITodo[]>(todos);
 
